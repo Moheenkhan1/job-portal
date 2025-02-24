@@ -22,7 +22,7 @@ exports.registerRecruiter = async (req, res) => {
       userId: recruiterUser._id,
       companyName,
       companyWebsite,
-      phone,
+      email,
     });
 
     await recruiter.save();

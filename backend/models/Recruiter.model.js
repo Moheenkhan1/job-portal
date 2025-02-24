@@ -13,7 +13,7 @@ const RecruiterSchema = new mongoose.Schema({
   companyWebsite: { 
     type: String 
 },
-  phone: { 
+  email: { 
     type: String, 
     required: true 
 },
