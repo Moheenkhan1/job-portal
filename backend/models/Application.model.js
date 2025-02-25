@@ -13,7 +13,7 @@ const ApplicationSchema = new mongoose.Schema({
 },
   recruiter: { 
     type: mongoose.Schema.Types.ObjectId, 
-    ref: "Recruiter", 
+    ref: "User", 
     required: true 
 },
   resumeLink: { 

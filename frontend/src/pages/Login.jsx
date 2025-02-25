@@ -37,17 +37,17 @@ const Login = () => {
     else if (userType === "admin") apiUrl = `${API_BASE_URL}/auth/admin/login`;
 
     try {
-      const response = await axios.post(apiUrl, { email, password });
+      const response = await axios.post(apiUrl, { email, password },{ withCredentials: true });
+      const { token, user } = response.data;
 
       if (response.status === 200) {
-        // alert(`${userType.charAt(0).toUpperCase() + userType.slice(1)} Login Successful!`);
-        if(userType==admin){
-            navigate('/admindashboard')
-        }else if(userType==student){
-            navigate('/userdashboard')
-        }else{
-            navigate('/recruiterdashboard')
-        }
+        localStorage.setItem("authToken", token);
+        localStorage.setItem("userRole", user.role);
+
+
+        if (userType === "student") navigate("/studentdashboard");
+        else if (userType === "recruiter") navigate("/recruiterdashboard");
+        else if (userType === "admin") navigate("/admindashboard");
         // Redirect or handle success (store token, navigate, etc.)
       } else {
         alert("Login failed. Please check your credentials.");

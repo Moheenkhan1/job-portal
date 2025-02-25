@@ -3,8 +3,9 @@ import { Routes , Route } from 'react-router-dom'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Admindashboard from './pages/Admindashboard'
-import Userdashboard from './pages/Userdashboard'
+import StudentDashboard from './pages/StudentDashboard'
 import Recruiterdashboard from './pages/Recruiterdashboard'
+import ProtectedRoute from './components/ProtectedRoute'
 
 const App = () => {
   return (
@@ -12,9 +13,34 @@ const App = () => {
       <Routes>
         <Route path='/login' element={ <Login/> } />
         <Route path='/register' element={ <Register/> } />
-        <Route path='/admindashboard' element={ <Admindashboard/> } />
-        <Route path='/userdashboard' element={ <Userdashboard/> } />
-        <Route path='/recruiterdashboard' element={ <Recruiterdashboard/> } />
+
+        <Route
+          path="/studentdashboard"
+          element={
+            <ProtectedRoute allowedRoles={["student"]}>
+              <StudentDashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/recruiterdashboard"
+          element={
+            <ProtectedRoute allowedRoles={["recruiter"]}>
+              <Recruiterdashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admindashboard"
+          element={
+            <ProtectedRoute allowedRoles={["admin"]}>
+              <Admindashboard />
+            </ProtectedRoute>
+          }
+        />
+
       </Routes>
     </>
   )

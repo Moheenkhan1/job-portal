@@ -7,6 +7,7 @@ const jwt = require("jsonwebtoken");
 const connectTodb = require("./config/db");
 const path = require("path");
 const authRoutes = require('./routes/auth.routes')
+const studentRoutes = require('./routes/studentdashboard.routes')
 
 
 dotenv.config();  
@@ -18,18 +19,17 @@ app.use(cookieParser());
 app.use(cors({
   origin: `${process.env.FRONTEND_URI}`, // Adjust this to your front-end URL  ${process.env.FRONTEND_URI}
   credentials: true,
-  allowedHeaders: ["Content-Type", "Authorization"],
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
 }));
 
 // ✅ Enable trust proxy for cookies in production
-app.set("trust proxy", 1);
+// app.set("trust proxy", 1);
 
 // MongoDB connection
 
 connectTodb();
 
 app.use('/auth',authRoutes)
+app.use('/student',studentRoutes)
 
 
 // Start the server

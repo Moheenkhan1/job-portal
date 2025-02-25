@@ -40,7 +40,14 @@ exports.loginStudent = async (req, res) => {
 
     const token = jwt.sign({ id: student._id, role: "student" }, process.env.JWT_SECRET, { expiresIn: "1h" });
 
-    res.json({ token, user: { id: student._id, name: student.name, email: student.email, role: "student" } });
+    // res.setHeader("Access-Control-Allow-Credentials", "true");
+res.cookie("token", token, {
+  httpOnly: true,
+  secure: false, // Use false in dev
+  sameSite: "Lax",
+});
+
+    res.status(200).json({ token, user: { id: student._id, name: student.name, email: student.email, role: "student" } });
   } catch (err) {
     res.status(500).json({ message: "Server error" });
   }
