@@ -27,6 +27,7 @@ exports.registerRecruiter = async (req, res) => {
 
     await recruiter.save();
 
+
     res.status(201).json({ message: "Recruiter registered successfully" });
   } catch (err) {
     res.status(500).json({ message: "Server error" });
@@ -49,6 +50,12 @@ exports.loginRecruiter = async (req, res) => {
     }
 
     const token = jwt.sign({ id: recruiterUser._id, role: "recruiter" }, process.env.JWT_SECRET, { expiresIn: "1h" });
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: false, // Use false in dev
+      sameSite: "Lax",
+    });
 
     res.json({ token, user: { id: recruiterUser._id, name: recruiterUser.name, email: recruiterUser.email, role: "recruiter" } });
   } catch (err) {

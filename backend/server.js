@@ -8,6 +8,7 @@ const connectTodb = require("./config/db");
 const path = require("path");
 const authRoutes = require('./routes/auth.routes')
 const studentRoutes = require('./routes/studentdashboard.routes')
+const recruiterRoutes = require('./routes/recruiterdashboard.routes')
 
 
 dotenv.config();  
@@ -30,6 +31,7 @@ connectTodb();
 
 app.use('/auth',authRoutes)
 app.use('/student',studentRoutes)
+app.use('/recruiter',recruiterRoutes)
 
 
 // Start the server
