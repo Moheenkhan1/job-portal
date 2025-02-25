@@ -58,78 +58,134 @@ const Login = () => {
     }
   };
 
+  const getTextColor = () => {
+    switch (userType) {
+      case "student":
+        return "text-blue-500";
+      case "recruiter":
+        return "text-green-500";
+      case "admin":
+        return "text-red-500";
+      default:
+        return "text-gray-100";
+    }
+  };
+
+
+  const getButtonColor = () => {
+    switch (userType) {
+      case "student":
+        return "bg-blue-500 hover:scale-102 shadow-lg";
+      case "recruiter":
+        return "bg-green-500 hover:scale-102 shadow-lg";
+      case "admin":
+        return "bg-red-500 hover:scale-102 shadow-lg";
+      default:
+        return "bg-gray-400";
+    }
+  };
+  
+  const getInputShadow = () => {
+    switch (userType) {
+      case "student":
+        return "shadow-inner focus:ring-blue-400";
+      case "recruiter":
+        return "shadow-inner focus:ring-green-400";
+      case "admin":
+        return "shadow-inner focus:ring-red-400";
+      default:
+        return "shadow-inner focus:ring-gray-400";
+    }
+  };
+
+  const getToggleAnimation = () => {
+    switch (userType) {
+      case "student":
+        return "animate-bounce text-blue-500";
+      case "recruiter":
+        return "animate-bounce text-green-500";
+      case "admin":
+        return "animate-bounce text-red-500";
+      default:
+        return "";
+    }
+  };
+  
+
+
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
-      <div className="w-full max-w-md bg-white p-6 rounded-lg shadow-lg">
-        <h2 className="text-2xl font-bold text-center mb-4">
-          {userType.charAt(0).toUpperCase() + userType.slice(1)} Login
-        </h2>
+    <div className={`min-h-screen flex items-center justify-center p-6 `}>
+    <div className="w-full max-w-md bg-white p-6 rounded-lg shadow-lg">
+      <h2 className={`text-2xl font-bold text-center mb-4 transition-all ${getTextColor()} ${getToggleAnimation()}`}>
+        {userType.charAt(0).toUpperCase() + userType.slice(1)} Login
+      </h2>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-gray-700">Email</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2"
-              placeholder="your@email.com"
-            />
-            {emailError && <p className="text-red-500 text-sm">{emailError}</p>}
-          </div>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <label className="block text-gray-700">Email</label>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 ${getInputShadow()}`}
+            placeholder="your@email.com"
+          />
+          {emailError && <p className="text-red-500 text-sm">{emailError}</p>}
+        </div>
 
-          <div>
-            <label className="block text-gray-700">Password</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2"
-              placeholder="••••••"
-            />
-            {passwordError && <p className="text-red-500 text-sm">{passwordError}</p>}
-          </div>
+        <div>
+          <label className="block text-gray-700">Password</label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 ${getInputShadow()}`}
+            placeholder="••••••"
+          />
+          {passwordError && <p className="text-red-500 text-sm">{passwordError}</p>}
+        </div>
 
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
+        <button
+          type="submit"
+          className={`w-full text-white py-2 rounded-lg transition ${getButtonColor()}`}
           >
-            Login
-          </button>
-        </form>
+          Login
+        </button>
+      </form>
 
-        {/* User Type Toggle */}
-        <div className="text-center mt-4">
-          <p className="text-gray-600">Login as:</p>
-          <div className="flex justify-center space-x-2 mt-2">
-            <button
-              onClick={() => setUserType("student")}
-              className={`px-4 py-2 rounded-lg ${
-                userType === "student" ? "bg-blue-500 text-white" : "bg-gray-200"
-              }`}
-            >
-              Student
-            </button>
-            <button
-              onClick={() => setUserType("recruiter")}
-              className={`px-4 py-2 rounded-lg ${
-                userType === "recruiter" ? "bg-blue-500 text-white" : "bg-gray-200"
-              }`}
-            >
-              Recruiter
-            </button>
-            <button
-              onClick={() => setUserType("admin")}
-              className={`px-4 py-2 rounded-lg ${
-                userType === "admin" ? "bg-blue-500 text-white" : "bg-gray-200"
-              }`}
-            >
-              Admin
-            </button>
-          </div>
+      {/* User Type Toggle */}
+      <div className="text-center mt-4">
+        <p className="text-gray-600">Login as:</p>
+        <div className="flex justify-center space-x-2 mt-2">
+          <button
+            onClick={() => setUserType("student")}
+            className={`px-4 py-2 rounded-lg ${
+              userType === "student" ? "bg-blue-500 text-white" : "bg-gray-200"
+            }`}
+          >
+            Student
+          </button>
+          <button
+            onClick={() => setUserType("recruiter")}
+            className={`px-4 py-2 rounded-lg ${
+              userType === "recruiter" ? "bg-green-500 text-white" : "bg-gray-200"
+            }`}
+          >
+            Recruiter
+          </button>
+          <button
+            onClick={() => setUserType("admin")}
+            className={`px-4 py-2 rounded-lg ${
+              userType === "admin" ? "bg-red-500 text-white" : "bg-gray-200"
+            }`}
+          >
+            Admin
+          </button>
         </div>
       </div>
     </div>
+  </div>
   );
 };
 
