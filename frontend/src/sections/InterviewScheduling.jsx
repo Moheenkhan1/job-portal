@@ -7,13 +7,16 @@ const InterviewScheduling = () => {
   const [selectedJob, setSelectedJob] = useState("");
   const [interviewDate, setInterviewDate] = useState("");
 
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
+
+
   useEffect(() => {
     fetchInterviews();
   }, []);
 
   const fetchInterviews = () => {
     axios
-      .get("http://localhost:8080/student/interviews", { withCredentials: true })
+      .get(`${API_BASE_URL}/student/interviews`, { withCredentials: true })
       .then((response) => {
         setInterviews(response.data);
       })
@@ -28,7 +31,7 @@ const InterviewScheduling = () => {
 
     axios
       .post(
-        "http://localhost:8080/student/interviews",
+        `${API_BASE_URL}/student/interviews`,
         { jobId: selectedJob, date: interviewDate },
         { withCredentials: true }
       )

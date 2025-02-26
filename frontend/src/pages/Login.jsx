@@ -45,7 +45,7 @@ const Login = () => {
         localStorage.setItem("userRole", user.role);
 
 
-        if (userType === "student") navigate("/studentdashboard");
+        if (userType === "student") navigate("/");
         else if (userType === "recruiter") navigate("/recruiterdashboard");
         else if (userType === "admin") navigate("/admindashboard");
         // Redirect or handle success (store token, navigate, etc.)

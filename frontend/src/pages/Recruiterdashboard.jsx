@@ -60,47 +60,76 @@ const RecruiterDashboard = () => {
   };
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
-      <h1 className="text-3xl font-bold mb-6">Recruiter Dashboard</h1>
+    <div className="min-h-screen bg-gray-100 py-12 px-6 flex flex-col items-center">
+      <h1 className="text-4xl font-bold text-blue-600 mb-8">Recruiter Dashboard</h1>
 
-      <div className="bg-white p-4 rounded shadow-md mb-6">
-        <h2 className="text-xl font-semibold mb-4">Post a New Job</h2>
-        <input className="w-full p-2 mb-2 border rounded" type="text" placeholder="Title" value={newJob.title} onChange={(e) => setNewJob({ ...newJob, title: e.target.value })} />
-        <input className="w-full p-2 mb-2 border rounded" type="text" placeholder="Company" value={newJob.company} onChange={(e) => setNewJob({ ...newJob, company: e.target.value })} />
-        <input className="w-full p-2 mb-2 border rounded" type="text" placeholder="Location" value={newJob.location} onChange={(e) => setNewJob({ ...newJob, location: e.target.value })} />
-        <textarea className="w-full p-2 mb-2 border rounded" placeholder="Description" value={newJob.description} onChange={(e) => setNewJob({ ...newJob, description: e.target.value })}></textarea>
-        <input className="w-full p-2 mb-2 border rounded" type="text" placeholder="Requirements (comma-separated)" value={newJob.requirements} onChange={(e) => setNewJob({ ...newJob, requirements: e.target.value })} />
-        <input className="w-full p-2 mb-2 border rounded" type="text" placeholder="Salary Range" value={newJob.salaryRange} onChange={(e) => setNewJob({ ...newJob, salaryRange: e.target.value })} />
-        <button className="bg-blue-500 text-white p-2 rounded" onClick={addJob}>Add Job</button>
+      {/* Post a New Job */}
+      <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg p-6 mb-8">
+        <h2 className="text-2xl font-semibold mb-4 text-gray-800">Post a New Job</h2>
+        <div className="grid grid-cols-2 gap-4">
+          <input className="w-full p-3 border rounded-lg" type="text" placeholder="Title" value={newJob.title} onChange={(e) => setNewJob({ ...newJob, title: e.target.value })} />
+          <input className="w-full p-3 border rounded-lg" type="text" placeholder="Company" value={newJob.company} onChange={(e) => setNewJob({ ...newJob, company: e.target.value })} />
+          <input className="w-full p-3 border rounded-lg" type="text" placeholder="Location" value={newJob.location} onChange={(e) => setNewJob({ ...newJob, location: e.target.value })} />
+          <input className="w-full p-3 border rounded-lg" type="text" placeholder="Salary Range" value={newJob.salaryRange} onChange={(e) => setNewJob({ ...newJob, salaryRange: e.target.value })} />
+        </div>
+        <textarea className="w-full p-3 mt-4 border rounded-lg" placeholder="Description" value={newJob.description} onChange={(e) => setNewJob({ ...newJob, description: e.target.value })}></textarea>
+        <input className="w-full p-3 mt-4 border rounded-lg" type="text" placeholder="Requirements (comma-separated)" value={newJob.requirements} onChange={(e) => setNewJob({ ...newJob, requirements: e.target.value })} />
+        <button className="w-full bg-blue-500 text-white py-3 mt-4 rounded-lg hover:bg-blue-600 transition" onClick={addJob}>
+          Add Job
+        </button>
       </div>
 
-      <div className="bg-white p-4 rounded shadow-md mb-6">
-        <h2 className="text-xl font-semibold mb-4">Posted Jobs</h2>
-        <ul>
-          {jobs.map((job) => (
-            <li key={job._id} className="flex justify-between items-center border-b p-2">
-              {job.title} - {job.company} ({job.location})
-              <button className="bg-red-500 text-white p-1 rounded" onClick={() => deleteJob(job._id)}>Delete</button>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      <div className="bg-white p-4 rounded shadow-md">
-        <h2 className="text-xl font-semibold mb-4">Applications</h2>
-        <ul>
-          {applications.map((app) => (
-            <li key={app._id} className="border-b p-2 flex justify-between items-center">
-              <span>{app.student.name} applied for {app.job.title} - <span className="font-semibold">Status: {app.status}</span></span>
-              {app.status === 'pending' && (
+      {/* Posted Jobs */}
+      <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg p-6 mb-8">
+        <h2 className="text-2xl font-semibold mb-4 text-gray-800">Posted Jobs</h2>
+        {jobs.length === 0 ? (
+          <p className="text-gray-500">No jobs posted yet.</p>
+        ) : (
+          <ul className="divide-y">
+            {jobs.map((job) => (
+              <li key={job._id} className="flex justify-between items-center py-3">
                 <div>
-                  <button className="bg-green-500 text-white p-1 rounded mr-2" onClick={() => updateApplicationStatus(app._id, 'Approved')}>Approve</button>
-                  <button className="bg-red-500 text-white p-1 rounded" onClick={() => updateApplicationStatus(app._id, 'Rejected')}>Reject</button>
+                  <h3 className="text-lg font-semibold text-gray-900">{job.title}</h3>
+                  <p className="text-gray-600">{job.company} - {job.location}</p>
                 </div>
-              )}
-            </li>
-          ))}
-        </ul>
+                <button className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition" onClick={() => deleteJob(job._id)}>
+                  Delete
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+
+      {/* Applications */}
+      <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg p-6">
+        <h2 className="text-2xl font-semibold mb-4 text-gray-800">Applications</h2>
+        {applications.length === 0 ? (
+          <p className="text-gray-500">No applications received.</p>
+        ) : (
+          <ul className="divide-y">
+            {applications.map((app) => (
+              <li key={app._id} className="flex justify-between items-center py-3">
+                <div>
+                  <p className="text-gray-700">{app.student.name} applied for <span className="font-semibold">{app.job.title}</span></p>
+                  <span className={`text-sm px-2 py-1 rounded-md ${app.status === 'pending' ? 'bg-yellow-100 text-yellow-600' : app.status === 'Approved' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'}`}>
+                    {app.status}
+                  </span>
+                </div>
+                {app.status === 'pending' && (
+                  <div>
+                    <button className="bg-green-500 text-white px-4 py-2 rounded-lg mr-2 hover:bg-green-600 transition" onClick={() => updateApplicationStatus(app._id, 'Approved')}>
+                      Approve
+                    </button>
+                    <button className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition" onClick={() => updateApplicationStatus(app._id, 'Rejected')}>
+                      Reject
+                    </button>
+                  </div>
+                )}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </div>
   );
