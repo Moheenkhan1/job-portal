@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [userType, setUserType] = useState("student"); // "student", "recruiter", "admin"
@@ -156,6 +156,7 @@ const Login = () => {
 
       {/* User Type Toggle */}
       <div className="text-center mt-4">
+        <Link to={'/register'} className="text-gray-600">Register Now.!</Link>
         <p className="text-gray-600">Login as:</p>
         <div className="flex justify-center space-x-2 mt-2">
           <button

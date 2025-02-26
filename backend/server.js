@@ -23,7 +23,7 @@ app.use(cors({
 }));
 
 // ✅ Enable trust proxy for cookies in production
-// app.set("trust proxy", 1);
+app.set("trust proxy", 1);
 
 // MongoDB connection
 
